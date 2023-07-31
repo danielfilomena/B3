@@ -1,0 +1,83 @@
+
+<div style="padding-left: 30px;padding-top: 30px;">
+
+  <h1>Calculo CDB</h1>
+
+  <br>
+
+  <form #form="ngForm" role="form" (ngSubmit)="onSubmit($event)">
+
+    <div class="row">
+
+      <div class="col-2">
+
+        <label class="form-label">Valor</label>
+
+        <div class="input-group mb-3">
+          <span class="input-group-text">$</span>
+          <input class="form-control" type="text" required id="valor" name="valor" [(ngModel)]="calculoViewModel.valor" autocomplete="off" #valor="ngModel">
+          <div *ngIf="valor.touched && valor.dirty && valor.value == ''">
+            <div class="text-danger" style="font-size:14px;">
+              O Valor informado deve ser maior de zero.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-2">
+        <label class="form-label">Prazo</label>
+        <input class="form-control" type="number" min="1" required id="prazo" name="prazo" [(ngModel)]="calculoViewModel.prazo" #prazo="ngModel">
+        <div *ngIf="prazo.touched && prazo.dirty && prazo.value <= '0'">
+          <div class="text-danger" style="font-size: 14px;">
+            O prazo informado deve ser maior que zero
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <br>
+
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Calcular</button>
+
+
+
+    <div *ngIf="retornoCalculo.length != 0">
+      <br>
+      <h3>Resultado</h3>
+      <br>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Valor Inicial</th>
+            <th>Prazo</th>
+            <th>Valor Bruto</th>
+            <th>% IR</th>
+            <th>Valor IR</th>
+            <th>Valor Liquido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of retornoCalculo" >
+            <td>{{item.valorInicial}}</td>
+            <td>{{item.prazo}}</td>
+            <td>{{item.valorBruto}}</td>
+            <td>{{item.imposto.percentualImposto}}</td>
+            <td>{{item.imposto.valorImposto}}</td>
+            <td>{{item.valorLiquido}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+
+
+  </form>
+
+
+</div>
+
